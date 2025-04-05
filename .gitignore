@@ -1,0 +1,6 @@
+c_cpp_properties.json
+*.o
+main
+.vscode/settings.json
+obj/
+resultado_teste_planilha/*.csv
