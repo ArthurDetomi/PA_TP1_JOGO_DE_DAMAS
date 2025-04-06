@@ -32,38 +32,19 @@ Grafo *cria_grafo(int nro_vert) {
   return grafo;
 }
 
-bool insere_aresta(Grafo *grafo, int vertice, int aresta) {
+bool insere_aresta(Grafo *grafo, int vertice, int vizinho) {
   if (is_grafo_empty(grafo)) {
     return false;
   }
 
-  if (vertice > grafo->nro_vertices || aresta > grafo->nro_vertices) {
+  if (vertice > grafo->nro_vertices || vizinho > grafo->nro_vertices) {
     return false;
   }
 
-  lista_encadeada_add_elemento(grafo->vertices[vertice], aresta);
+  lista_encadeada_add_elemento(grafo->vertices[vertice], vizinho);
+  lista_encadeada_add_elemento(grafo->vertices[vizinho], vertice);
 
   return true;
-}
-
-void imprimir_aresta(lista_encadeada vizinhos) {
-  printf("[");
-
-  int qtd_vizinho = lista_encadeada_tamanho(vizinhos);
-
-  int i = 0;
-
-  for (int i = 0; i < qtd_vizinho; i++) {
-    vizinhos = vizinhos->proximo;
-
-    printf("%d", vizinhos->elemento);
-
-    if (i != qtd_vizinho - 1) {
-      printf(",");
-    }
-  }
-
-  printf("]");
 }
 
 void imprimir_grafo(Grafo *grafo) {
@@ -74,7 +55,23 @@ void imprimir_grafo(Grafo *grafo) {
 
   for (int i = 0; i <= grafo->nro_vertices; i++) {
     printf("%d : => ", i);
-    imprimir_aresta(grafo->vertices[i]);
+    imprimir_lista_encadeada(grafo->vertices[i]);
     printf("\n");
   }
+}
+
+void libera_grafo(Grafo *grafo) {
+  if (is_grafo_empty(grafo)) {
+    return;
+  }
+
+  for (int i = 0; i < grafo->nro_vertices; i++) {
+    destroi_lista_encadeada(grafo->vertices[i]);
+  }
+
+  free(grafo->vertices);
+  free(grafo);
+
+  grafo = NULL;
+  grafo->vertices = NULL;
 }

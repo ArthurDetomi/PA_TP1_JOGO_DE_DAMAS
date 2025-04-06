@@ -63,3 +63,25 @@ void destroi_lista_encadeada(lista_encadeada lista) {
   }
   free(lista);
 }
+
+void imprimir_lista_encadeada(lista_encadeada lista) {
+  printf("[");
+
+  int qtd_vizinho = lista_encadeada_tamanho(lista);
+
+  int i = 0;
+
+  while (lista->proximo != NULL) {
+    lista = lista->proximo;
+
+    printf("%d", lista->elemento);
+
+    if (i != qtd_vizinho - 1) {
+      printf(",");
+    }
+
+    i++;
+  }
+
+  printf("]");
+}

@@ -27,4 +27,6 @@ int lista_encadeada_tamanho(lista_encadeada lista);
 // Libera o espaço alocado da lista
 void destroi_lista_encadeada(lista_encadeada lista);
 
+void imprimir_lista_encadeada(lista_encadeada lista);
+
 #endif
