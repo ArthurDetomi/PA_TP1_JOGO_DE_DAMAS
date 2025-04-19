@@ -28,7 +28,7 @@ SRC=$(wildcard $(SRC_DIR)/*.c) $(wildcard $(SRC_DIR)/**/*.c)
 OBJ_DIR=obj
 OBJ=$(patsubst $(SRC_DIR)/%.c, $(OBJ_DIR)/%.o, $(SRC))
 OBJ_SUB_DIRS=$(sort $(dir $(OBJ)))
-EXE=main
+EXE=tp1
 
 # Dev executable with hot reloading
 DEV=dev
