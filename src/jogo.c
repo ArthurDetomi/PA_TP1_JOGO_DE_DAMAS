@@ -2,7 +2,6 @@
 #include "../include/util.h"
 
 #include <stdbool.h>
-#include <stdio.h>
 
 #define DIRECOES_MOVIMENTO 4
 
