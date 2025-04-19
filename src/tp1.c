@@ -42,7 +42,6 @@ int main(int argc, char *argv[]) {
   }
 
   fclose(file_pointer);
-  file_pointer = NULL;
 
   return 0;
 }
