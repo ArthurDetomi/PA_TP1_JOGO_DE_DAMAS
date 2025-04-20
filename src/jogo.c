@@ -2,6 +2,7 @@
 
 #include <stdbool.h>
 
+// Macro que avalia e retorna o maior entre dois valores (x e y)
 #define max(x, y) x > y ? x : y
 
 #define DIRECOES_MOVIMENTO 4
