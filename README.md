@@ -17,6 +17,22 @@ O tabuleiro do jogo é retangular, com `N` linhas e `M` colunas, onde as casas d
 - A captura múltipla é permitida, ou seja, o jogador pode saltar várias vezes, capturando diversas peças do oponente em sequência.
 - Não é permitido saltar sobre uma peça do próprio jogador ou saltar a mesma peça do oponente mais de uma vez.
 
+## Resolução do Problema
+
+A solução foi implementada utilizando a técnica de **backtracking** (ou "retrocesso"), que permite explorar todas as possíveis capturas que o jogador pode realizar em um dado tabuleiro. O backtracking é uma abordagem eficiente para resolver problemas que envolvem múltiplas escolhas sequenciais, como o de capturar peças em várias etapas. O algoritmo tenta fazer uma captura, e, se for bem-sucedido, recursivamente tenta fazer capturas adicionais, voltando ao estado anterior se a solução não for promissora.
+
+### Como Funciona:
+
+1. O algoritmo começa verificando todas as direções possíveis para capturar peças do oponente a partir de uma posição válida da peça do jogador.
+
+2. Para cada direção válida de captura (onde uma peça do oponente está seguida por uma casa vazia), o algoritmo realiza a captura e recursivamente tenta outras capturas a partir da nova posição.
+
+3. A captura é **"desfeita"** (restaurando o tabuleiro ao estado anterior) após cada tentativa, garantindo que o algoritmo explore todas as possibilidades de captura múltipla.
+
+4. A cada captura válida, o algoritmo mantém um registro do maior número de peças capturadas em uma sequência de saltos.
+
+5. Este processo continua até que todas as peças do jogador tenham sido exploradas, e o número máximo de capturas possíveis é determinado.
+
 ## Entrada
 
 A entrada contém vários casos de teste. Cada caso de teste é composto pelas seguintes linhas:
