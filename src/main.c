@@ -63,8 +63,9 @@ int main(int argc, char *argv[]) {
     printf("Máximo de Capturas: %d\n", maximo_capturas);
     printf("Tempo de execução:\n");
     imprimirTempos(&tempo_teste);
+    salva_resultado_csv(maximo_capturas,&tempo_teste,"resultados.csv");
     printf("\n");
-
+    
     // Libera memória alocada para o tabuleiro
     destruir_tabuleiro(tab);
   }
