@@ -1,7 +1,8 @@
 #include "../include/jogo.h"
-#include "../include/util.h"
 
 #include <stdbool.h>
+
+#define max(x, y) x > y ? x : y
 
 #define DIRECOES_MOVIMENTO 4
 
