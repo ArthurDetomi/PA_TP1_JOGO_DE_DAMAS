@@ -98,6 +98,10 @@ Tempo Sistema: 0.000083 segundos
 Tempo Total CPU: 0.000083 segundos
 ```
 
+## Documentação
+
+- [📄 Instruções para o desenvolvimento do trabalho](docs/tp1.pdf)
+
 ## Como Rodar o Programa
 
 ### Passo 1: Compilação
