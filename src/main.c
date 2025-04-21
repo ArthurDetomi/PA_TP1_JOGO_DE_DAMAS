@@ -9,7 +9,7 @@ int main(int argc, char *argv[]) {
   // Verifica se os argumentos de linha de comando são válidos
   if (!is_argumentos_validos(argc, argv)) {
     printf("Erro: Parâmetros inválidos.\n");
-    printf("Uso correto: ./tp1 -i entrada.txt\n");
+    printf("Uso correto: ./tp1 -i input/in.txt\n");
     printf("Onde '-i' indica o arquivo de entrada.\n");
 
     return 1;
@@ -47,7 +47,13 @@ int main(int argc, char *argv[]) {
 
     // Carrega o conteúdo do tabuleiro a partir do arquivo
     carregar_tabuleiro_arquivo(tab, file_pointer);
-
+    for (int i = 0; i < total_linhas; i++) {
+      for (int j = 0; j < total_colunas; j++) {
+        printf("%3c", tab->casas[i][j]);
+      }
+      printf("\n");
+    }
+    printf("\n");
     // Inicia o temporizador para medir o tempo deste teste específico
     Temporizador tempo_teste;
     iniciarTemporizador(&tempo_teste);
