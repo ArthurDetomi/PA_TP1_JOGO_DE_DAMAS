@@ -33,4 +33,6 @@ Tabuleiro *criar_tabuleiro(int total_linhas, int total_colunas);
 // Libera a memória alocada para o tabuleiro
 void destruir_tabuleiro(Tabuleiro *tab);
 
+void imprimir_tabuleiro(Tabuleiro *tab);
+
 #endif

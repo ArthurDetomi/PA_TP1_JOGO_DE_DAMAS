@@ -13,45 +13,47 @@ void finalizarTemporizador(Temporizador *t) {
   getrusage(RUSAGE_SELF, &t->end_usage);
 }
 
-// Calcula diferença entre tempos reais (start e end) em segundos
-double calcularTempoReal(Temporizador *t) {
-  return (t->end_tv.tv_sec - t->start_tv.tv_sec) +
-         (t->end_tv.tv_usec - t->start_tv.tv_usec) / 1000000.0;
+double calcularTempo(struct timeval inicio, struct timeval fim) {
+  time_t seg = fim.tv_sec - inicio.tv_sec;
+  suseconds_t microseg = fim.tv_usec - inicio.tv_usec;
+
+  // Ajusta caso microsegundos do fim sejam menores que os do início
+  if (microseg < 0) {
+    seg -= 1;
+    microseg += 1000000;
+  }
+
+  return (double)seg + (double)microseg / 1e6;
 }
 
-// Calcula diferença entre tempos de usuário (start e end) em segundos
-double calcularTempoUsuario(Temporizador *t) {
-  return (t->end_usage.ru_utime.tv_sec - t->start_usage.ru_utime.tv_sec) +
-         (t->end_usage.ru_utime.tv_usec - t->start_usage.ru_utime.tv_usec) /
-             1000000.0;
+// Calcula diferença entre tempos reais (start e end) em segundos
+double calcularTempoReal(Temporizador *t) {
+  return calcularTempo(t->start_tv, t->end_tv);
 }
 
 // Calcula diferença entre tempos de sistema (start e end) em segundos
 double calcularTempoSistema(Temporizador *t) {
-  return (t->end_usage.ru_stime.tv_sec - t->start_usage.ru_stime.tv_sec) +
-         (t->end_usage.ru_stime.tv_usec - t->start_usage.ru_stime.tv_usec) /
-             1000000.0;
+  return calcularTempo(t->start_usage.ru_stime, t->end_usage.ru_stime);
 }
 
 // Imprime todos os tempos de execução de forma legível
 void imprimirTempos(Temporizador *t) {
-  printf("Tempo Real: %.8f segundos\n", calcularTempoReal(t));
-  printf("Tempo Usuário: %.8f segundos\n", calcularTempoUsuario(t));
+  printf("Tempo Real: %.8f segundos\n",
+         calcularTempoReal(t)); // Tempo real é agora o "Tempo Usuário"
   printf("Tempo Sistema: %.8f segundos\n", calcularTempoSistema(t));
-  printf("Tempo Total CPU: %.8f segundos\n",
-         calcularTempoUsuario(t) + calcularTempoSistema(t));
 }
 
 // Salva os resultados em um arquivo CSV
-void salva_resultado_csv(int max, Temporizador *t,const char *nome_arquivo){
+void salva_resultado_csv(int max, Temporizador *t, const char *nome_arquivo) {
   FILE *file = fopen(nome_arquivo, "a");
   if (file == NULL) {
-      perror("Erro ao abrir arquivo CSV");
-      return;
+    perror("Erro ao abrir arquivo CSV");
+    return;
   }
 
   // Escreve os dados no formato CSV
-  fprintf(file, "%d,%.6f,%.6f,%.6f\n", max, calcularTempoReal(t),calcularTempoUsuario(t),calcularTempoSistema(t));
+  fprintf(file, "%d,%.6f,%.6f\n", max, calcularTempoReal(t),
+          calcularTempoSistema(t));
 
   fclose(file);
 }

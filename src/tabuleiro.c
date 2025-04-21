@@ -1,5 +1,6 @@
 #include "../include/tabuleiro.h"
 
+#include <stdio.h>
 #include <stdlib.h>
 
 // Função auxiliar para alocar dinamicamente um vetor de posições
@@ -56,4 +57,20 @@ void destruir_tabuleiro(Tabuleiro *tab) {
   // Libera a estrutura principal do tabuleiro
   free(tab);
   tab = NULL;
+}
+
+void imprimir_tabuleiro(Tabuleiro *tab) {
+  if (tab == NULL) {
+    return;
+  }
+
+  printf("Imprimindo tabuleiro (%dx%d): \n", tab->total_linhas,
+         tab->total_colunas);
+  for (int i = 0; i < tab->total_linhas; i++) {
+    for (int j = 0; j < tab->total_colunas; j++) {
+      printf("%3c", tab->casas[i][j]);
+    }
+    printf("\n");
+  }
+  printf("\n");
 }

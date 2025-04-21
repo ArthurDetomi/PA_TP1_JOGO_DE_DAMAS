@@ -47,13 +47,9 @@ int main(int argc, char *argv[]) {
 
     // Carrega o conteúdo do tabuleiro a partir do arquivo
     carregar_tabuleiro_arquivo(tab, file_pointer);
-    for (int i = 0; i < total_linhas; i++) {
-      for (int j = 0; j < total_colunas; j++) {
-        printf("%3c", tab->casas[i][j]);
-      }
-      printf("\n");
-    }
-    printf("\n");
+
+    imprimir_tabuleiro(tab);
+
     // Inicia o temporizador para medir o tempo deste teste específico
     Temporizador tempo_teste;
     iniciarTemporizador(&tempo_teste);
@@ -69,11 +65,14 @@ int main(int argc, char *argv[]) {
     printf("Máximo de Capturas: %d\n", maximo_capturas);
     printf("Tempo de execução:\n");
     imprimirTempos(&tempo_teste);
-    salva_resultado_csv(maximo_capturas,&tempo_teste,"resultados.csv");
-    printf("\n");
-    
+
+    // Salva resultados de tempo em um csv
+    salva_resultado_csv(maximo_capturas, &tempo_teste, "output/resultados.csv");
+
     // Libera memória alocada para o tabuleiro
     destruir_tabuleiro(tab);
+
+    printf("\n");
   }
 
   // Finaliza a medição do tempo total de execução
