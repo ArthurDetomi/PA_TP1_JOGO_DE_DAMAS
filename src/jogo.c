@@ -2,12 +2,12 @@
 
 #include <stdbool.h>
 
-// Macro que avalia e retorna o maior entre dois valores (x e y)
+// Macro que avalia e retorna o maior entre dois valores
 #define max(x, y) x > y ? x : y
 
 #define DIRECOES_MOVIMENTO 4
 
-// Direções para captura (peça oponente e casa vazia)
+// Direções para captura, para tentar encontrar uma peça do oponente
 Posicao direcoes_oponente[DIRECOES_MOVIMENTO] = {
     {-1, -1}, // Diagonal superior esquerda
     {-1, 1},  // Diagonal superior direita
@@ -56,11 +56,11 @@ int calcular_maximo_captura_por_peca(Tabuleiro *tab, Posicao pos) {
     Posicao posicao_vazia = {pos.linha + direcoes_vazio[i].linha,
                              pos.coluna + direcoes_vazio[i].coluna};
 
-    bool oponente_valido =
+    bool is_peca_oponente =
         posicao_eh_valida(tab, posicao_oponente) &&
         tab->casas[posicao_oponente.linha][posicao_oponente.coluna] ==
             PECA_OPONENTE;
-    bool vazio_valido =
+    bool is_peca_vazia =
         posicao_eh_valida(tab, posicao_vazia) &&
         tab->casas[posicao_vazia.linha][posicao_vazia.coluna] == CASA_VAZIA;
 
@@ -68,7 +68,7 @@ int calcular_maximo_captura_por_peca(Tabuleiro *tab, Posicao pos) {
       Verifica se a captura nesta direção é válida : Se para essa respectiva
       direção existe uma peça do oponente seguida de uma casa vazia
     */
-    if (oponente_valido && vazio_valido) {
+    if (is_peca_oponente && is_peca_vazia) {
       // Realiza a captura (modifica o tabuleiro)
       atualizar_tabuleiro(tab, pos, posicao_oponente, posicao_vazia);
 

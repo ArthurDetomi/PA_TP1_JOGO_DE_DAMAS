@@ -9,8 +9,9 @@ int main(int argc, char *argv[]) {
   // Verifica se os argumentos de linha de comando são válidos
   if (!is_argumentos_validos(argc, argv)) {
     printf("Erro: Parâmetros inválidos.\n");
-    printf("Uso correto: ./tp1 -i input/in.txt\n");
+    printf("Uso correto: ./tp1 -i input/in.txt -o saida.txt\n");
     printf("Onde '-i' indica o arquivo de entrada.\n");
+    printf("Onde '-o' indica o arquivo de saída (Opcional)\n");
 
     return 1;
   }
@@ -19,11 +20,11 @@ int main(int argc, char *argv[]) {
   char *input_path = argv[2];
 
   // Tenta abrir o arquivo de entrada no modo leitura
-  FILE *file_pointer = fopen(input_path, "r");
+  FILE *input_fp = fopen(input_path, "r");
 
   // Verifica se o arquivo foi aberto com sucesso
-  if (file_pointer == NULL) {
-    perror("Erro ao abrir arquivo\n");
+  if (input_fp == NULL) {
+    perror("Erro ao abrir arquivo de entrada\n");
     return 1;
   }
 
@@ -31,11 +32,24 @@ int main(int argc, char *argv[]) {
   Temporizador tempo_total;
   iniciarTemporizador(&tempo_total);
 
+  // Obtém o caminho de arquivo de saída através dos argumentos
+  char output_path[80];
+  get_output_path(argc, argv, output_path);
+
+  // Tenta criar um arquivo para salvar a saída principal
+  FILE *output_fp = fopen(output_path, "w");
+
+  // Verifica se o arquivo foi aberto com sucesso
+  if (output_fp == NULL) {
+    perror("Erro ao abrir arquivo de saida\n");
+    return 1;
+  }
+
   while (true) {
     int total_linhas, total_colunas;
 
     // Lê as dimensões do tabuleiro (linhas x colunas)
-    fscanf(file_pointer, "%d %d", &total_linhas, &total_colunas);
+    fscanf(input_fp, "%d %d", &total_linhas, &total_colunas);
 
     // Condição de parada
     if (total_linhas == 0 || total_colunas == 0) {
@@ -46,9 +60,7 @@ int main(int argc, char *argv[]) {
     Tabuleiro *tab = criar_tabuleiro(total_linhas, total_colunas);
 
     // Carrega o conteúdo do tabuleiro a partir do arquivo
-    carregar_tabuleiro_arquivo(tab, file_pointer);
-
-    imprimir_tabuleiro(tab);
+    carregar_tabuleiro_arquivo(tab, input_fp);
 
     // Inicia o temporizador para medir o tempo deste teste específico
     Temporizador tempo_teste;
@@ -65,6 +77,9 @@ int main(int argc, char *argv[]) {
     printf("Máximo de Capturas: %d\n", maximo_capturas);
     printf("Tempo de execução:\n");
     imprimirTempos(&tempo_teste);
+
+    // Salva o maximo de capturas no arquivo de saída
+    fprintf(output_fp, "%d\n", maximo_capturas);
 
     // Salva resultados de tempo em um csv
     salva_resultado_csv(maximo_capturas, &tempo_teste, "output/resultados.csv");
@@ -83,7 +98,8 @@ int main(int argc, char *argv[]) {
   imprimirTempos(&tempo_total);
 
   // Fecha o arquivo de entrada
-  fclose(file_pointer);
+  fclose(input_fp);
+  fclose(output_fp);
 
   return 0;
 }

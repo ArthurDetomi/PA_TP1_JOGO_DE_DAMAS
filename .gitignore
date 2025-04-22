@@ -5,3 +5,4 @@ main
 obj/
 resultado_teste_planilha/*.csv
 tp1
+output/**

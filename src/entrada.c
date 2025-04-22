@@ -1,9 +1,29 @@
 #include "../include/entrada.h"
 
+#include <stdbool.h>
 #include <string.h>
 
 bool is_argumentos_validos(int argc, char *argv[]) {
-  return argc == NUM_ARGS_ESPERADOS && strcmp(argv[1], FLAG_INPUT) == 0;
+  // A entrada do programa deve possuir 3 argumentos ou 5 argumentos
+  if (argc != NUM_MIN_ARGS_ESPERADOS && argc != NUM_MAX_ARGS_ESPERADOS) {
+    return false;
+  }
+
+  // Se não possui a flag -i como argumento considera-se invalido
+  if (strcmp(argv[1], FLAG_INPUT) != 0) {
+    return false;
+  }
+
+  /*
+    Se possui o número minimo de argumentos a validação já feita é suficiente
+    portanto é válido os argumentos
+  */
+  if (argc == NUM_MIN_ARGS_ESPERADOS) {
+    return true;
+  }
+
+  // Caso tenha 5 argumentos o 4 argumento obrigatoriamente deve ser o -o
+  return strcmp(argv[3], FLAG_OUTPUT) == 0;
 }
 
 void carregar_tabuleiro_arquivo(Tabuleiro *tab, FILE *fp) {
@@ -30,4 +50,12 @@ void carregar_tabuleiro_arquivo(Tabuleiro *tab, FILE *fp) {
 
   // Atualiza a quantidade total de peças do jogador no tabuleiro
   tab->jogador.quantidade = qtd_pecas_jogador;
+}
+
+void *get_output_path(int argc, char *argv[], char *output_path) {
+  strcpy(output_path, "output/");
+  strcat(output_path,
+         (NUM_MAX_ARGS_ESPERADOS == argc) ? argv[4] : "output.txt");
+
+  return output_path;
 }
