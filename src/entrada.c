@@ -1,6 +1,7 @@
 #include "../include/entrada.h"
 
 #include <stdbool.h>
+#include <stdlib.h>
 #include <string.h>
 
 bool is_argumentos_validos(int argc, char *argv[]) {
@@ -9,8 +10,14 @@ bool is_argumentos_validos(int argc, char *argv[]) {
     return false;
   }
 
+  int estrategia = (int)atoi(argv[ESTRATEGIA_P]);
+
+  if (estrategia != FORCA_BRUTA && estrategia != BACKTRACKING) {
+    return false;
+  }
+
   // Se não possui a flag -i como argumento considera-se invalido
-  if (strcmp(argv[1], FLAG_INPUT) != 0) {
+  if (strcmp(argv[FLAG_INPUT_P], FLAG_INPUT) != 0) {
     return false;
   }
 
@@ -23,11 +30,11 @@ bool is_argumentos_validos(int argc, char *argv[]) {
   }
 
   // Caso tenha 5 argumentos o 4 argumento obrigatoriamente deve ser o -o
-  return strcmp(argv[3], FLAG_OUTPUT) == 0;
+  return strcmp(argv[FLAG_OUTPUT_P], FLAG_OUTPUT) == 0;
 }
 
 void carregar_tabuleiro_arquivo(Tabuleiro *tab, FILE *fp) {
-  int qtd_pecas_jogador = 0;
+  int qtd_pecas_jogador = 0, max_peças_capturaveis = 0;
 
   // Ponteiro para o array de posições das peças do jogador
   Posicao *posicoes_pecas_jogador = tab->jogador.posicoes;
@@ -45,17 +52,30 @@ void carregar_tabuleiro_arquivo(Tabuleiro *tab, FILE *fp) {
 
         qtd_pecas_jogador++;
       }
+
+      Posicao pos;
+      pos.linha = i;
+      pos.coluna = j;
+
+      if (tab->casas[i][j] == PECA_OPONENTE &&
+          eh_posicao_valida_para_ser_capturada(tab, pos)) {
+        max_peças_capturaveis++;
+      }
     }
   }
 
-  // Atualiza a quantidade total de peças do jogador no tabuleiro
+  // Atribui a quantidade total de peças do jogador no tabuleiro
   tab->jogador.quantidade = qtd_pecas_jogador;
+
+  // Atribui a quantidade total de peças do oponente que estão em posicionamento
+  // favoravel
+  tab->max_peças_capturaveis = max_peças_capturaveis;
 }
 
 void *get_output_path(int argc, char *argv[], char *output_path) {
   strcpy(output_path, "output/");
-  strcat(output_path,
-         (NUM_MAX_ARGS_ESPERADOS == argc) ? argv[4] : "output.txt");
+  strcat(output_path, (NUM_MAX_ARGS_ESPERADOS == argc) ? argv[ARQUIVO_SAIDA_P]
+                                                       : "output.txt");
 
   return output_path;
 }

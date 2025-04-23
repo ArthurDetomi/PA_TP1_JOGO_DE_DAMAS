@@ -1,7 +1,9 @@
 #include "../include/tabuleiro.h"
+#include "../include/direcoes.h"
 
 #include <stdio.h>
 #include <stdlib.h>
+#include <string.h>
 
 // Função auxiliar para alocar dinamicamente um vetor de posições
 Posicao *alocar_posicoes(int total) {
@@ -73,4 +75,39 @@ void imprimir_tabuleiro(Tabuleiro *tab) {
     printf("\n");
   }
   printf("\n");
+}
+
+// Verifica se uma posição está dentro dos limites do tabuleiro
+bool posicao_esta_dentro_tabuleiro(Tabuleiro *tab, Posicao pos) {
+  return (pos.linha >= 0 && pos.linha < tab->total_linhas) &&
+         (pos.coluna >= 0 && pos.coluna < tab->total_colunas);
+}
+
+void copiar_casas_tabuleiro(char dest[20][20], Tabuleiro *tab) {
+  if (dest == NULL) {
+    return;
+  }
+
+  for (int i = 0; i < 20; i++) {
+    memcpy(dest[i], tab->casas[i], 20 * sizeof(char));
+  }
+}
+
+bool eh_posicao_valida_para_ser_capturada(Tabuleiro *tab, Posicao pos) {
+  // Verifica se a peça do oponente está na borda do tabuleiro
+  if (pos.linha == 0 || pos.linha == tab->total_linhas - 1 || pos.coluna == 0 ||
+      pos.coluna == tab->total_colunas - 1) {
+    return false;
+  }
+
+  // Verifica se há alguma casa vazia na sua diagonal
+  for (int i = 0; i < QUANTIDADE_DIRECOES_DIAGONAIS; i++) {
+    Posicao posicao_vazia = {pos.linha + direcoes_uma_casa_diagonal[i].linha,
+                             pos.coluna + direcoes_uma_casa_diagonal[i].coluna};
+    if (tab->casas[posicao_vazia.linha][posicao_vazia.coluna] == CASA_VAZIA) {
+      return true;
+    }
+  }
+
+  return false;
 }

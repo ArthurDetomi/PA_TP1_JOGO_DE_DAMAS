@@ -1,23 +1,26 @@
 #include "../include/entrada.h"
-#include "../include/jogo.h"
+#include "../include/strategybacktracking.h"
+#include "../include/strategybruteforce.h"
 #include "../include/tempo.h"
 
 #include <stdio.h>
 #include <stdlib.h>
+#include <string.h>
 
 int main(int argc, char *argv[]) {
   // Verifica se os argumentos de linha de comando são válidos
   if (!is_argumentos_validos(argc, argv)) {
     printf("Erro: Parâmetros inválidos.\n");
-    printf("Uso correto: ./tp1 -i input/in.txt -o saida.txt\n");
+    printf("Uso correto: ./tp1 {estrateǵia} -i input/in.txt -o saida.txt\n");
     printf("Onde '-i' indica o arquivo de entrada.\n");
     printf("Onde '-o' indica o arquivo de saída (Opcional)\n");
+    printf("Estratégia aceita somente 1(Força bruta) e 2{Backtracking}\n");
 
     return 1;
   }
 
   // Obtém o caminho do arquivo de entrada a partir dos argumentos
-  char *input_path = argv[2];
+  char *input_path = argv[ARQUIVO_ENTRADA_P];
 
   // Tenta abrir o arquivo de entrada no modo leitura
   FILE *input_fp = fopen(input_path, "r");
@@ -45,6 +48,8 @@ int main(int argc, char *argv[]) {
     return 1;
   }
 
+  int estrategia_escolhida = atoi(argv[ESTRATEGIA_P]);
+
   while (true) {
     int total_linhas, total_colunas;
 
@@ -66,8 +71,17 @@ int main(int argc, char *argv[]) {
     Temporizador tempo_teste;
     iniciarTemporizador(&tempo_teste);
 
-    // Calcula o número máximo de capturas possíveis para este tabuleiro
-    int maximo_capturas = calcular_maximo_capturas_tabuleiro(tab);
+    int maximo_capturas;
+
+    switch (estrategia_escolhida) {
+    case FORCA_BRUTA:
+      // Calcula o número máximo de capturas possíveis para este tabuleiro
+      maximo_capturas = calcular_maximo_capturas_tabuleiro_backtracking(tab);
+      break;
+    case BACKTRACKING:
+      maximo_capturas = calcular_maximo_capturas_tabuleiro_brute(tab);
+      break;
+    }
 
     // Finaliza a medição de tempo para este teste
     finalizarTemporizador(&tempo_teste);

@@ -1,27 +1,10 @@
-#include "../include/jogo.h"
+#include "../include/strategybacktracking.h"
+#include "../include/direcoes.h"
 
 #include <stdbool.h>
 
 // Macro que avalia e retorna o maior entre dois valores
 #define max(x, y) x > y ? x : y
-
-#define DIRECOES_MOVIMENTO 4
-
-// Direções para captura, para tentar encontrar uma peça do oponente
-Posicao direcoes_oponente[DIRECOES_MOVIMENTO] = {
-    {-1, -1}, // Diagonal superior esquerda
-    {-1, 1},  // Diagonal superior direita
-    {1, -1},  // Diagonal inferior esquerda
-    {1, 1}    // Diagonal inferior direita
-};
-
-// Vetores com as direções relativas para posições vazias após captura
-Posicao direcoes_vazio[DIRECOES_MOVIMENTO] = {
-    {-2, -2}, // Dois passos superior esquerda
-    {-2, 2},  // Dois passos superior direita
-    {2, -2},  // Dois passos inferior esquerda
-    {2, 2}    // Dois passos inferior direita
-};
 
 // Atualiza o tabuleiro após uma captura
 void atualizar_tabuleiro(Tabuleiro *tab, Posicao peca, Posicao oponente,
@@ -39,29 +22,25 @@ void restaurar_tabuleiro(Tabuleiro *tab, Posicao peca, Posicao oponente,
   tab->casas[vazio.linha][vazio.coluna] = CASA_VAZIA;
 }
 
-// Verifica se uma posição está dentro dos limites do tabuleiro
-bool posicao_eh_valida(Tabuleiro *tab, Posicao pos) {
-  return (pos.linha >= 0 && pos.linha < tab->total_linhas) &&
-         (pos.coluna >= 0 && pos.coluna < tab->total_colunas);
-}
-
 //  Calcula o máximo de capturas possíveis para uma peça específica
 int calcular_maximo_captura_por_peca(Tabuleiro *tab, Posicao pos) {
 
   int maximo_capturas = 0;
 
-  for (int i = 0; i < DIRECOES_MOVIMENTO; i++) {
-    Posicao posicao_oponente = {pos.linha + direcoes_oponente[i].linha,
-                                pos.coluna + direcoes_oponente[i].coluna};
-    Posicao posicao_vazia = {pos.linha + direcoes_vazio[i].linha,
-                             pos.coluna + direcoes_vazio[i].coluna};
+  for (int i = 0; i < QUANTIDADE_DIRECOES_DIAGONAIS; i++) {
+    Posicao posicao_oponente = {pos.linha + direcoes_uma_casa_diagonal[i].linha,
+                                pos.coluna +
+                                    direcoes_uma_casa_diagonal[i].coluna};
+    Posicao posicao_vazia = {pos.linha + direcoes_duas_casas_diagonal[i].linha,
+                             pos.coluna +
+                                 direcoes_duas_casas_diagonal[i].coluna};
 
     bool is_peca_oponente =
-        posicao_eh_valida(tab, posicao_oponente) &&
+        posicao_esta_dentro_tabuleiro(tab, posicao_oponente) &&
         tab->casas[posicao_oponente.linha][posicao_oponente.coluna] ==
             PECA_OPONENTE;
     bool is_peca_vazia =
-        posicao_eh_valida(tab, posicao_vazia) &&
+        posicao_esta_dentro_tabuleiro(tab, posicao_vazia) &&
         tab->casas[posicao_vazia.linha][posicao_vazia.coluna] == CASA_VAZIA;
 
     /*
@@ -87,7 +66,7 @@ int calcular_maximo_captura_por_peca(Tabuleiro *tab, Posicao pos) {
 }
 
 // Calcula o número máximo de capturas possíveis em todo o tabuleiro
-int calcular_maximo_capturas_tabuleiro(Tabuleiro *tab) {
+int calcular_maximo_capturas_tabuleiro_backtracking(Tabuleiro *tab) {
   int maior_captura_possivel = -1;
 
   // Obtém todas as peças do jogador

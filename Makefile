@@ -54,7 +54,7 @@ $(OBJ_DIR):
 	$(MKDIR) $(OBJ_SUB_DIRS)
 
 $(EXE): $(OBJ_DIR) $(OBJ)
-	$(CC) $(CFLAGS) $(OBJ) -o $@ $(INCLUDE_DIRS) $(LINK_DIRS) $(LINKS) $(DEFINE)
+	$(CC) $(CFLAGS) $(OBJ) -o $@ $(INCLUDE_DIRS) $(LINK_DIRS) $(LINKS) $(DEFINE) -lm
 
 $(OBJ): $(OBJ_DIR)/%.o: $(SRC_DIR)/%.c
 	$(CC) $(CFLAGS) -c $< -o $@ $(INCLUDE_DIRS) $(LINK_DIRS) $(LINKS) $(DEFINE)
