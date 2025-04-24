@@ -54,6 +54,8 @@ Exemplos:
 
 ## Estrutura do projeto
 
+🔗 [Acesse este repositório no GitHub](https://github.com/ArthurDetomi/PA_TP1_JOGO_DE_DAMAS)
+
 - A documentação segue-se no diretorio /docs
 
 [Documentação](/docs/Documentação%20TP1%20-%20Oscar%20e%20Arthur%20Geraldo.pdf)
@@ -65,10 +67,18 @@ Exemplos:
 <table>
   <tr>
     <td align="center">
-      <a href="https://github.com/arthurdetomi" title="Perfil do GitHub">
+      <a href="https://github.com/arthurdetomi" title="Perfil do GitHub de Geraldo Arthur">
         <img src="https://avatars.githubusercontent.com/u/99772832?v=4" width="100px;" alt="Foto do perfil do Geraldo Arthur Detomi no GitHub"/><br>
         <sub>
           <b>Geraldo Arthur Detomi</b>
+        </sub>
+      </a>
+    </td>
+    <td align="center">
+      <a href="https://github.com/HomoGodzilla" title="Perfil do GitHub de Oscar Alves">
+        <img src="https://avatars.githubusercontent.com/u/89045220?v=4" width="100px;" alt="Foto do perfil do Oscar Alves no GitHub"/><br>
+        <sub>
+          <b>Oscar Alves</b>
         </sub>
       </a>
     </td>
