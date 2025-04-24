@@ -75,11 +75,10 @@ int main(int argc, char *argv[]) {
 
     switch (estrategia_escolhida) {
     case FORCA_BRUTA:
-      // Calcula o número máximo de capturas possíveis para este tabuleiro
-      maximo_capturas = calcular_maximo_capturas_tabuleiro_backtracking(tab);
+      maximo_capturas = calcular_maximo_capturas_tabuleiro_brute(tab);
       break;
     case BACKTRACKING:
-      maximo_capturas = calcular_maximo_capturas_tabuleiro_brute(tab);
+      maximo_capturas = calcular_maximo_capturas_tabuleiro_backtracking(tab);
       break;
     }
 

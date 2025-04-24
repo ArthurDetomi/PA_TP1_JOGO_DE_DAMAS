@@ -1,5 +1,4 @@
 #include "../include/tabuleiro.h"
-#include "../include/direcoes.h"
 
 #include <stdio.h>
 #include <stdlib.h>
@@ -100,14 +99,5 @@ bool eh_posicao_valida_para_ser_capturada(Tabuleiro *tab, Posicao pos) {
     return false;
   }
 
-  // Verifica se há alguma casa vazia na sua diagonal
-  for (int i = 0; i < QUANTIDADE_DIRECOES_DIAGONAIS; i++) {
-    Posicao posicao_vazia = {pos.linha + direcoes_uma_casa_diagonal[i].linha,
-                             pos.coluna + direcoes_uma_casa_diagonal[i].coluna};
-    if (tab->casas[posicao_vazia.linha][posicao_vazia.coluna] == CASA_VAZIA) {
-      return true;
-    }
-  }
-
-  return false;
+  return true;
 }

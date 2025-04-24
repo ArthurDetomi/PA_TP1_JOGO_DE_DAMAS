@@ -8,8 +8,6 @@
 
 #define max(x, y) x > y ? x : y
 
-char movimentos[QUANTIDADE_DIRECOES_DIAGONAIS] = {'0', '1', '2', '3'};
-
 void realizar_captura(char casas[20][20], Posicao origem, Posicao oponente,
                       Posicao destino) {
   casas[oponente.linha][oponente.coluna] = CASA_VAZIA;
@@ -76,6 +74,8 @@ int calcular_maximo_capturas(char *path, int path_size_max, Tabuleiro *tab) {
 
   return max_capturas;
 }
+
+char movimentos[QUANTIDADE_DIRECOES_DIAGONAIS] = {'0', '1', '2', '3'};
 
 /*
   Gera todas as combinações de movimentos possíveis para realizar de forma a
