@@ -17,7 +17,7 @@ Você instalou um compilador C (como gcc) e a versão mais recente do make.
 
 Você leu este README até o final para entender como compilar e executar o programa.
 
-## 🚀 Compilando o código <nome_do_projeto>
+## 🚀 Compilando o código
 
 Para compilar o código, siga estas etapas:
 
@@ -52,7 +52,7 @@ Exemplos:
 # Gera o arquivo resultado.txt
 ```
 
-## Estrutura do projeto
+## 📚 Documentação
 
 🔗 [Acesse este repositório no GitHub](https://github.com/ArthurDetomi/PA_TP1_JOGO_DE_DAMAS)
 
