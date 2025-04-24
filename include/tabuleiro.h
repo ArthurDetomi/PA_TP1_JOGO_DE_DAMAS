@@ -27,7 +27,7 @@ typedef struct {
   int total_colunas;
   char casas[20][20];
   ConjuntoDePecas jogador;
-  int max_peças_capturaveis;
+  int max_pecas_capturaveis;
 } Tabuleiro;
 
 // Cria e inicializa uma nova instância de tabuleiro

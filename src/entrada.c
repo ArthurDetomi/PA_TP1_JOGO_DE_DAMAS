@@ -34,7 +34,7 @@ bool is_argumentos_validos(int argc, char *argv[]) {
 }
 
 void carregar_tabuleiro_arquivo(Tabuleiro *tab, FILE *fp) {
-  int qtd_pecas_jogador = 0, max_peças_capturaveis = 0;
+  int qtd_pecas_jogador = 0, max_pecas_capturaveis = 0;
 
   // Ponteiro para o array de posições das peças do jogador
   Posicao *posicoes_pecas_jogador = tab->jogador.posicoes;
@@ -59,7 +59,7 @@ void carregar_tabuleiro_arquivo(Tabuleiro *tab, FILE *fp) {
 
       if (tab->casas[i][j] == PECA_OPONENTE &&
           eh_posicao_valida_para_ser_capturada(tab, pos)) {
-        max_peças_capturaveis++;
+        max_pecas_capturaveis++;
       }
     }
   }
@@ -69,7 +69,7 @@ void carregar_tabuleiro_arquivo(Tabuleiro *tab, FILE *fp) {
 
   // Atribui a quantidade total de peças do oponente que estão em posicionamento
   // favoravel
-  tab->max_peças_capturaveis = max_peças_capturaveis;
+  tab->max_pecas_capturaveis = max_pecas_capturaveis;
 }
 
 void *get_output_path(int argc, char *argv[], char *output_path) {

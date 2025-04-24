@@ -105,7 +105,7 @@ void simular_todos_os_caminhos(char *current_path, int n, int path_size_max,
 }
 
 int calcular_maximo_capturas_tabuleiro_brute(Tabuleiro *tab) {
-  const int PATH_SIZE_MAX = tab->max_peças_capturaveis;
+  const int PATH_SIZE_MAX = tab->max_pecas_capturaveis;
 
   char *current_path = (char *)malloc(PATH_SIZE_MAX * sizeof(char));
 
