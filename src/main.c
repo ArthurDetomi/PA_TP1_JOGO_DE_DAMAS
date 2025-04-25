@@ -3,9 +3,7 @@
 #include "../include/strategybruteforce.h"
 #include "../include/tempo.h"
 
-#include <stdio.h>
 #include <stdlib.h>
-#include <string.h>
 
 int main(int argc, char *argv[]) {
   // Verifica se os argumentos de linha de comando são válidos
@@ -42,8 +40,11 @@ int main(int argc, char *argv[]) {
   // Tenta criar um arquivo para salvar a saída principal
   FILE *output_fp = fopen(output_path, "w");
 
+  // Arquivo para salvar os tempos em um arquivo csv
+  FILE *csv_output_fp = fopen("output/resultados.csv", "w");
+
   // Verifica se o arquivo foi aberto com sucesso
-  if (output_fp == NULL) {
+  if (output_fp == NULL || csv_output_fp == NULL) {
     perror("Erro ao abrir arquivo de saida\n");
     return 1;
   }
@@ -95,7 +96,7 @@ int main(int argc, char *argv[]) {
     fprintf(output_fp, "%d\n", maximo_capturas);
 
     // Salva resultados de tempo em um csv
-    salva_resultado_csv(maximo_capturas, &tempo_teste, "output/resultados.csv");
+    salva_resultado_csv(maximo_capturas, &tempo_teste, csv_output_fp);
 
     // Libera memória alocada para o tabuleiro
     destruir_tabuleiro(tab);
@@ -110,9 +111,10 @@ int main(int argc, char *argv[]) {
   printf("Tempo total de execução:\n");
   imprimirTempos(&tempo_total);
 
-  // Fecha o arquivo de entrada
+  // Fecha todos os arquivos
   fclose(input_fp);
   fclose(output_fp);
+  fclose(csv_output_fp);
 
   return 0;
 }

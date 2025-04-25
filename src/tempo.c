@@ -1,5 +1,4 @@
 #include "../include/tempo.h"
-#include <stdio.h>
 
 // Inicia a medição do tempo, armazenando os valores atuais
 void iniciarTemporizador(Temporizador *t) {
@@ -44,16 +43,8 @@ void imprimirTempos(Temporizador *t) {
 }
 
 // Salva os resultados em um arquivo CSV
-void salva_resultado_csv(int max, Temporizador *t, const char *nome_arquivo) {
-  FILE *file = fopen(nome_arquivo, "a");
-  if (file == NULL) {
-    perror("Erro ao abrir arquivo CSV");
-    return;
-  }
-
+void salva_resultado_csv(int max, Temporizador *t, FILE *fp) {
   // Escreve os dados no formato CSV
-  fprintf(file, "%d,%.6f,%.6f\n", max, calcularTempoReal(t),
+  fprintf(fp, "%d,%.6f,%.6f\n", max, calcularTempoReal(t),
           calcularTempoSistema(t));
-
-  fclose(file);
 }

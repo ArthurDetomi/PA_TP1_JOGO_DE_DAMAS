@@ -1,6 +1,7 @@
 #ifndef TIME_H
 #define TIME_H
 
+#include <stdio.h>
 #include <sys/resource.h>
 #include <sys/time.h>
 
@@ -29,6 +30,6 @@ double calcularTempoSistema(Temporizador *t);
 void imprimirTempos(Temporizador *t);
 
 // Salva os resultados em um arquivo CSV
-void salva_resultado_csv(int max, Temporizador *t,const char *nome_arquivo);
+void salva_resultado_csv(int max, Temporizador *t, FILE *fp);
 
 #endif
